@@ -2,7 +2,7 @@
 <div class="card shadow-sm">
     <div class="container d-flex align-items-center justify-content-between p-0 m-0">
         <div class="d-flex align-items-center m-2">
-            <img src="{% static 'images/logo.svg' %}" width="120" height="120">
+            <a href="{% url 'main-page' %}"><img src="{% static 'images/logo.svg' %}" width="120" height="120"></a>
             <h2><b>
                 Sport<br>
                 Inventory
@@ -11,12 +11,12 @@
         {% if request.user.is_anonymous %}
         <div class="d-grid gap-2 m-3">
             <a href="#"><button type="button" class="btn btn-primary"><b>Зарегистрироваться</b></button></a>
-            <a href="#" type="button" class="btn btn-primary "><b>Войти</b></a> 
+            <a href="{% url 'login' %}" type="button" class="btn btn-primary "><b>Войти</b></a> 
         </div>
         {% else %}
         <div class="d-grid gap-2 m-3">
             <a href="#"><button type="button" class="btn btn-primary "><b> Профиль</b></button></a>
-            <a href="#" type="button" class="btn btn-danger "><b>Выйти</b></a> 
+            <a href="{% url 'logout' %}" type="button" class="btn btn-danger "><b>Выйти</b></a> 
         </div>
         {% endif %}
     </div>  

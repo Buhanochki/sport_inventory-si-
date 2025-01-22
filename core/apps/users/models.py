@@ -31,15 +31,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin, TimedBaseModel):
         error_messages={"unique": "Пользователь с такой почтой уже зарегистрировался"},
     )
 
-    bio = models.TextField(
-        verbose_name="bio",
-        blank=True,
-    )
-
     STATUS_CHOICES = [
         ("PT", "Участник"),
         ("TC", "Руководитель"),
-        ("SP","Поставщик"),
+        ("SP", "Поставщик"),
     ]
 
     status = models.CharField(
