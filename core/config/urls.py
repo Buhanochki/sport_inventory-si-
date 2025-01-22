@@ -7,7 +7,11 @@ from core.apps.users.views import (
     UserLoginView,
     logout_user,
     main_page,
+    UserProfile,
+    UserProfileUpdate,
+    UserRegistration,
 )
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -16,4 +20,7 @@ urlpatterns = [
     path("", main_page, name="main-page"),
     path("dashboard/admin", AdminDashboard.as_view(), name="admin-dashboard"),
     path("dashboard/user", UserDashboard.as_view(), name="user-dashboard"),
+    path("register/", UserRegistration.as_view(), name="register"),
+    path("user_profile/", UserProfile.as_view(), name="user_profile"),
+    path("user_profile/update_profile", UserProfileUpdate.as_view(), name="update_profile"),
 ]
