@@ -41,7 +41,7 @@ class UserLoginView(TemplateView):
 
 
 class AdminDashboard(TemplateView):
-    template_name = "users/admin_main_page.html"
+    template_name = "main/admin_main_page.html"
 
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
@@ -52,7 +52,7 @@ class AdminDashboard(TemplateView):
 
 
 class UserDashboard(TemplateView):
-    template_name = "users/user_main_page.html"
+    template_name = "main/user_main_page.html"
 
     def get(self, request, *args, **kwargs):
         if request.user.is_anonymous:
