@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Item, OrganisationItemConnection, UserItemConnection
+from core.apps.items.models import Item, OrganizationItemConnection, UserItemConnection
 
 
 @admin.register(Item)
@@ -22,10 +22,10 @@ class UserItemConnectionAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(OrganisationItemConnection)
-class OrganisationItemConnectionAdmin(admin.ModelAdmin):
+@admin.register(OrganizationItemConnection)
+class OrganizationItemConnectionAdmin(admin.ModelAdmin):
     list_display = (
-        "organisation",
+        "organization",
         "item",
         "created_at",
         "updated_at",

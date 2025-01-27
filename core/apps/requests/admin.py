@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from .models import JoinRequest, RepairRequest
+from core.apps.requests.models import JoinRequest, RepairRequest
 
 
 @admin.register(JoinRequest)
 class JoinRequestAdmin(admin.ModelAdmin):
-    list_display = ("user", "organisation")
+    list_display = ("user", "organization")
 
 
 @admin.register(RepairRequest)

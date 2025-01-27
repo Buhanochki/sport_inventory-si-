@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 
 
-class OrganisationsConfig(AppConfig):
+class OrganizationsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "core.apps.organisations"
+    name = "core.apps.organizations"
     verbose_name = "Организации"
