@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from .models import Organisation, UserOrganisationConnection
 
 
@@ -13,4 +14,3 @@ class UserOrganisationConnectionAdmin(admin.ModelAdmin):
         "user",
         "organisation",
     )
-    

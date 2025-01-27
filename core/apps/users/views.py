@@ -1,14 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect, render, get_object_or_404
-from django.views.generic import TemplateView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-
-from core.apps.users.forms import UserLoginForm
+from django.views.generic import CreateView, TemplateView, UpdateView
 
 from core.apps.users.models import CustomUser
 
-from core.apps.users.forms import ExtendedUserCreationForm, UserProfileUpdateForm
+from core.apps.users.forms import ExtendedUserCreationForm, UserLoginForm, UserProfileUpdateForm
 
 
 class UserLoginView(TemplateView):

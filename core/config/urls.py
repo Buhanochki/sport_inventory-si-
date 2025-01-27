@@ -5,13 +5,12 @@ from core.apps.users.views import (
     AdminDashboard,
     UserDashboard,
     UserLoginView,
-    logout_user,
-    main_page,
     UserProfile,
     UserProfileUpdate,
     UserRegistration,
+    logout_user,
+    main_page,
 )
-
 
 urlpatterns = [
     path("admin/", admin.site.urls),

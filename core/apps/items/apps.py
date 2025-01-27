@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class ItemsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "core.apps.items"
-    verbose_name="Экипировка"
+    verbose_name = "Экипировка"

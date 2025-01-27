@@ -1,7 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
-from django import forms
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 
 from core.apps.users.models import CustomUser
 
@@ -46,7 +44,7 @@ class UserLoginForm(AuthenticationForm):
             else:
                 self.fields[field].widget.attrs.update({"class": "form-control is-invalid"})
         return super().is_valid()
-    
+
 
 class CustomUserMixinForm(forms.ModelForm):
     def is_valid(self):
@@ -158,7 +156,7 @@ class UserProfileUpdateForm(CustomUserMixinForm, UserChangeForm):
             ),
             "first_name": forms.TextInput(attrs={"class": "form-control", "placeholder": "Имя"}),
             "surname": forms.TextInput(attrs={"class": "form-control", "placeholder": "Отчество"}),
-            "email": forms.TextInput(attrs={"class": "form-control", "placeholder": "Email"})
+            "email": forms.TextInput(attrs={"class": "form-control", "placeholder": "Email"}),
         }
         exclude = ["many_to_many_field"]
 
