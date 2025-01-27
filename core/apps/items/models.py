@@ -1,6 +1,7 @@
 from django.db import models
 
 from core.apps.common.models import TimedBaseModel
+from core.apps.organisations.models import Organisation
 from core.apps.users.models import CustomUser
 
 
@@ -24,4 +25,17 @@ class UserItemConnection(TimedBaseModel):
     class Meta:
         verbose_name = "Запись"
         verbose_name_plural = "Пользователь-Продукт"
+        ordering = ["pk"]
+
+
+class OrganisationItemConnection(TimedBaseModel):
+    organisation = models.ForeignKey(
+        Organisation, verbose_name="Организация", on_delete=models.CASCADE
+    )
+    item = models.ForeignKey(Item, verbose_name="Продукт", on_delete=models.CASCADE)
+    amount = models.IntegerField(verbose_name="Количество")
+
+    class Meta:
+        verbose_name = "Запись"
+        verbose_name_plural = "Организация-Продукт"
         ordering = ["pk"]
