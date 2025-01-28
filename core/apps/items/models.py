@@ -13,9 +13,9 @@ class Item(TimedBaseModel):
     description = models.TextField(
         verbose_name="Описание",
     )
-    picture = models.ImageField(
-        verbose_name="Картинка",
-        upload_to="static/items",
+    supplier = models.CharField(
+        max_length=20,
+        verbose_name="Поставщик",
     )
 
     class Meta:

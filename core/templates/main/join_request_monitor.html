@@ -1,0 +1,26 @@
+{% extends 'base/base.html' %}
+{% block title %} Заявка на вступление {% endblock %}
+{% block body %}
+{% if request.status == "IP" %}
+<div class="card">
+    <div class="card-body d-grid">
+        <span class="badge text-bg-warning">В процессе рассмотрения</span>
+        {{request.organization}}
+    </div>
+</div>
+{% elif request.status == "DC" %}
+<div class="card">
+    <div class="card-body d-grid">
+        <span class="badge text-bg-danger">Отклонено</span>
+        {{request.organization}}
+    </div>
+</div>
+{% else %}
+<div class="card">
+    <div class="card-body d-grid">
+        <span class="badge text-bg-success">Принято</span>
+        Организация: {{request.organization}}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -29,7 +29,6 @@ class CustomUserAdmin(UserAdmin):
                 ),
             },
         ),
-        ("О себе", {"classes": ("collapse",), "fields": ("bio",)}),
         (
             "Пароль",
             {

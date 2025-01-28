@@ -5,9 +5,9 @@ from core.apps.requests.models import JoinRequest, RepairRequest
 
 @admin.register(JoinRequest)
 class JoinRequestAdmin(admin.ModelAdmin):
-    list_display = ("user", "organization")
+    list_display = ("user", "organization", "status")
 
 
 @admin.register(RepairRequest)
 class RepairRequestAdmin(admin.ModelAdmin):
-    list_display = ("title", "item")
+    list_display = ("title", "item", "status")

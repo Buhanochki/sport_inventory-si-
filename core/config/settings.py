@@ -22,7 +22,7 @@ AUTH_USER_MODEL = "users.CustomUser"
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    (os.path.join(BASE_DIR, "core/static/images")),
+    (os.path.join(BASE_DIR, "core/static/")),
 ]
 
 INSTALLED_APPS = [

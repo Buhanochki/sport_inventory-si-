@@ -117,4 +117,4 @@ class UserProfileUpdate(LoginRequiredMixin, UpdateView):
         return get_object_or_404(CustomUser, id=self.request.user.id)
 
     def get_success_url(self):
-        return reverse_lazy("user_profile")
+        return reverse_lazy("user-profile")

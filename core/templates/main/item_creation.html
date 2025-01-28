@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+{% block title %} Создать Продукт {% endblock %}
+{% block body %}
+<div class="card">
+    <div class="card-body">
+        <form action="{% url 'item-create' %}" method="post">
+        {% csrf_token %}
+        Название
+        {{form.title}}
+        Описание
+        {{form.description}}
+        Поставщик
+        {{form.supplier}}
+        Количество
+        {{form.amount}}
+        <button class="btn btn-primary col-12 mt-2">Сохранить предмет</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

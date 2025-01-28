@@ -16,7 +16,7 @@
             <div class="card-body">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <label class="form-label">Фамилия Имя Отчество</label>
+                
                     <div class="input-group mb-2">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
                         {{ form.last_name }}
@@ -33,7 +33,7 @@
                         {{ error }}
                     </div>
                     {% endfor %}
-                    <label class="form-label">Почта</label>
+                    
                     <div class="input-group mb-2">
                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                         {{ form.email }}
@@ -43,17 +43,8 @@
                         {{ error }}
                     </div>
                     {% endfor %}
-                    <label class="form-label">Биография</label>
-                    <div class="input-group mb-2">
-                        {{ form.bio }}
-                    </div>
-                    {% for error in form.bio.errors %}
-                    <div class="text-danger small mb-2">
-                        {{ error }}
-                    </div>
-                    {% endfor %}
                     <div class="btn-group col-12">
-                        <a href="{% url 'user_profile' %}" class="btn btn-secondary col-12">Отмена</a>
+                        <a href="{% url 'user-profile' %}" class="btn btn-secondary col-12">Отмена</a>
                         <button type="submit" class="btn btn-primary col-12">Сохранить</button>
                     </div>
                 </form>
