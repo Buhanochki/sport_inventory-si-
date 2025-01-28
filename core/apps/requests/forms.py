@@ -1,7 +1,7 @@
 from django import forms
 
 from core.apps.organizations.models import Organization
-from core.apps.requests.models import JoinRequest
+from core.apps.requests.models import JoinRequest, RepairRequest
 
 
 class JoinForm(forms.ModelForm):
@@ -12,3 +12,12 @@ class JoinForm(forms.ModelForm):
     class Meta:
         model = JoinRequest
         fields = ["organization"]
+
+
+class RepairForm(forms.ModelForm):
+    class Meta:
+        model = RepairRequest
+        fields = ['title']
+        widgets = {
+            'title': forms.TextInput(attrs={"class":"form-control", "rows": 1}),
+        }

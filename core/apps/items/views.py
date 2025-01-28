@@ -106,6 +106,7 @@ class ItemUpdateView(UpdateView):
 class ItemDetailedView(DetailView):
     model = Item
     template_name = "main/item_detailed.html"
+    context_object_name = "item"
 
 class UserInventory(ListView):
     model = UserItemConnection

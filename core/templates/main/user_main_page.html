@@ -18,9 +18,9 @@
                     <h5 class="card-title">{{item.item.title}}</h5>
                     <p class="card-text">{{item.item.supplier}}</p>
                 </div>
-                <div class="d-grid gap-1">
-                    <a href="/items/rent/{{item.pk}}"><span class="badge text-bg-success p-2">Арендовать</span></a>
-                    <span class="badge text-bg-primary p-2">Подробнее</span>
+                <div class="d-grid gap-1 ">
+                    <span class="badge text-bg-success p-2 "><a href="/items/rent/{{item.pk}}" class="text-decoration-none text-white">Арендовать</a></span>
+                    <span class="badge text-bg-primary p-2"><a href="{% url 'item-detailed' item.item.pk %}" class="text-decoration-none text-white">Подробнее</a></span>
                 </div>
             </div>
         </div>   

@@ -7,11 +7,12 @@ from core.apps.items.views import (
     ItemUpdateView,
     UserItemsListView,
     UserInventory,
+    ItemDetailedView,
     item_delete,
     item_rent,
     cancel_rent,
 )
-from core.apps.requests.views import JoinRequestCreateView, JoinRequestMonitor, JoinRequestAdminListView, join_request_decline, join_request_accept
+from core.apps.requests.views import JoinRequestCreateView, JoinRequestMonitor, JoinRequestAdminListView,RepairRequestCreateView, join_request_decline, join_request_accept
 from core.apps.users.views import (
     AdminDashboard,
     UserDashboard,
@@ -43,8 +44,10 @@ urlpatterns = [
     path("items/inventory/user", UserInventory.as_view(), name='user-inventory'),
     path("items/rent/<int:pk>", item_rent, name="item-rent"),
     path("items/rent/cancel/<int:pk>", cancel_rent, name="item-rent-cancel"),
+    path("items/item/detailed/<int:pk>", ItemDetailedView.as_view(), name="item-detailed"),
     path('organizations/create', AdminNoOrganization.as_view(), name="organization-create"),
     path('requests/join_requests/admin', JoinRequestAdminListView.as_view(), name='requests-admin-join-view'),
     path('requests/join_requests/decline/<int:pk>', join_request_decline, name='requests-admin-join-decline'),
     path('requests/join_requests/accept/<int:pk>', join_request_accept, name='requests-admin-join-accept'),
+    path('request/repair_request/add', RepairRequestCreateView.as_view(), name='requests-repair-add')
 ]

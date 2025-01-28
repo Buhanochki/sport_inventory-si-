@@ -2,9 +2,9 @@ from django.shortcuts import get_object_or_404, redirect, render, HttpResponseRe
 from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from core.apps.organizations.models import Organization, UserOrganizationConnection
-from core.apps.requests.models import JoinRequest
+from core.apps.requests.models import JoinRequest, RepairRequest
 
-from core.apps.requests.forms import JoinForm
+from core.apps.requests.forms import JoinForm, RepairForm
 
 
 class JoinRequestCreateView(CreateView):
@@ -45,6 +45,17 @@ class JoinRequestAdminListView(ListView):
         context = super().get_context_data(**kwargs)
         context['requests'] = JoinRequest.objects.filter(organization=UserOrganizationConnection.objects.get(user=self.request.user).organization)
         return context
+
+class RepairRequestCreateView(CreateView):
+    model = RepairRequest
+    form_class = RepairForm 
+    template_name = "main/repair_request_create.html"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        print(self.args, self.kwargs)
+        form.instance.save()
+        return super().form_valid(form)
 
 def join_request_decline(request, pk):
     if request.user.status == "TC":
