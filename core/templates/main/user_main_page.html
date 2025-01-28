@@ -2,17 +2,16 @@
 {% block title %} Юзер {% endblock %}
 {% block body %}
 <div class="container d-grid p-0 m-0">
-<div class="card mb-2 shadow-sm ">
-    <div class="card-body d-flex gap-2 p-2">
-        <a type="button" class="btn btn-primary flex-fill" href="dashboard_user.html"><b>Дашборд</b></a>
-        <a type="button" class="btn btn-outline-primary flex-fill" href="inventory_user.html"><b>Мой инвентарь</b></a>
-        <a type="button" class="btn btn-outline-primary flex-fill" href="#"><b>Мои заявки</b></a> 
+    <div class="card mb-2 shadow-sm ">
+        <div class="card-body d-flex gap-2 p-2">
+            <a type="button" class="btn btn-primary flex-fill" href="{% url 'user-dashboard' %}"><b>Дашборд</b></a>
+            <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'user-inventory' %}"><b>Мой инвентарь</b></a>
+            <a type="button" class="btn btn-outline-primary flex-fill" href="#"><b>Мои заявки</b></a> 
+        </div>
     </div>
-</div>
-<div class="container d-flex p-0 m-0">
-    {% for item in items %}
-    <div class="col-md-6 ms-1 me-1">
-        <!-- Ваш компонент 1 -->
+
+    {% for item in items %}  
+        {% if item.item not in user_inventory and item.amount != 0 %}
         <div class="card mb-4">
             <div class="card-body d-flex">
                 <div class="container">
@@ -20,13 +19,12 @@
                     <p class="card-text">{{item.item.supplier}}</p>
                 </div>
                 <div class="d-grid gap-1">
-                    <span class="badge text-bg-success p-2">Арендовать</span>
+                    <a href="/items/rent/{{item.pk}}"><span class="badge text-bg-success p-2">Арендовать</span></a>
                     <span class="badge text-bg-primary p-2">Подробнее</span>
                 </div>
             </div>
-        </div>
-    </div>
+        </div>   
+        {% endif %}
     {% endfor %}
-    </div>
 </div> 
 {% endblock %}

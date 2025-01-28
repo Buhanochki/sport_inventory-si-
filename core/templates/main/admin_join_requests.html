@@ -1,0 +1,32 @@
+{% extends 'base/base.html' %}
+{% block title %} Выберите организацию {% endblock %}
+{% block body %}
+<div class="conatiner d-grid w-100 p-0 m-0">
+<div class="card mb-2 shadow-sm w-100">
+    <div class="card-body d-flex gap-2 p-2">
+        <a type="button" class="btn btn-outline-primary flex-fill" href="{% url 'user-dashboard' %}"><b>Дашборд</b></a>
+        <a type="button" class="btn btn-primary flex-fill" href="#"><b>Заявки</b></a> 
+        <a type="button" class="btn btn-outline-primary flex-fill" href="#"><b>Закупки</b></a>
+        <a type="button" class="btn btn-outline-primary flex-fill" href="#"><b>Отчеты</b></a>
+    </div>
+</div>
+<div class="card w-100">
+    <div class="card-body d-flex gap-2 p-2">
+        <a href="#" type="button" class="btn btn-primary col-md-6"><b>Заявки на вступление в организацию</b></a>
+        <a href="#" type="button" class="btn btn-outline-primary col-md-6"><b>Заявки на ремонт оборудования</b></a> 
+    </div>
+</div>
+{% for request in requests %}
+    {% if request.status == "IP" %}
+    <div class="card mt-2">
+        <div class="card-body d-flex justify-content-between">
+            <h5 class="card-title">{{request.user.last_name}} {{request.user.first_name}} {{request.user.surname}}</h5>
+            <div class="d-flex gap-1">
+                <a href="/requests/join_requests/decline/{{request.pk}}"><span class="badge text-bg-danger p-2 d-flex align-items-center"><i class="bi bi-x-lg"></i></span></a>
+                <a href="/requests/join_requests/accept/{{request.pk}}"><span class="badge text-bg-primary p-2 d-flex align-items-center"><i class="bi bi-check-lg"></i></span></a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endfor %}
+{% endblock %}

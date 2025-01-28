@@ -6,9 +6,12 @@ from core.apps.items.views import (
     ItemCreateView,
     ItemUpdateView,
     UserItemsListView,
+    UserInventory,
     item_delete,
+    item_rent,
+    cancel_rent,
 )
-from core.apps.requests.views import JoinRequestCreateView, JoinRequestMonitor
+from core.apps.requests.views import JoinRequestCreateView, JoinRequestMonitor, JoinRequestAdminListView, join_request_decline, join_request_accept
 from core.apps.users.views import (
     AdminDashboard,
     UserDashboard,
@@ -19,6 +22,8 @@ from core.apps.users.views import (
     logout_user,
     main_page,
 )
+from core.apps.organizations.views import AdminNoOrganization
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -35,4 +40,11 @@ urlpatterns = [
     path("items/create", ItemCreateView.as_view(), name="item-create"),
     path("items/update/<int:pk>", ItemUpdateView.as_view(), name="item-update"),
     path("items/delete/<int:pk>", item_delete, name="item-delete"),
+    path("items/inventory/user", UserInventory.as_view(), name='user-inventory'),
+    path("items/rent/<int:pk>", item_rent, name="item-rent"),
+    path("items/rent/cancel/<int:pk>", cancel_rent, name="item-rent-cancel"),
+    path('organizations/create', AdminNoOrganization.as_view(), name="organization-create"),
+    path('requests/join_requests/admin', JoinRequestAdminListView.as_view(), name='requests-admin-join-view'),
+    path('requests/join_requests/decline/<int:pk>', join_request_decline, name='requests-admin-join-decline'),
+    path('requests/join_requests/accept/<int:pk>', join_request_accept, name='requests-admin-join-accept'),
 ]
