@@ -4,15 +4,27 @@ from django.urls import path
 from core.apps.items.views import (
     AdminItemsListView,
     ItemCreateView,
-    ItemUpdateView,
-    UserItemsListView,
-    UserInventory,
     ItemDetailedView,
+    ItemUpdateView,
+    UserInventory,
+    UserItemsListView,
+    cancel_rent,
     item_delete,
     item_rent,
-    cancel_rent,
 )
-from core.apps.requests.views import JoinRequestCreateView, JoinRequestMonitor, JoinRequestAdminListView,RepairRequestCreateView, join_request_decline, join_request_accept
+from core.apps.organizations.views import AdminNoOrganization
+from core.apps.requests.views import (
+    JoinRequestAdminListView,
+    JoinRequestCreateView,
+    JoinRequestMonitor,
+    RepairRequestAdminListView,
+    RepairRequestCreateView,
+    RepairRequestListView,
+    join_request_accept,
+    join_request_decline,
+    repair_request_accept,
+    repair_request_decline,
+)
 from core.apps.users.views import (
     AdminDashboard,
     UserDashboard,
@@ -23,8 +35,6 @@ from core.apps.users.views import (
     logout_user,
     main_page,
 )
-from core.apps.organizations.views import AdminNoOrganization
-
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -41,13 +51,45 @@ urlpatterns = [
     path("items/create", ItemCreateView.as_view(), name="item-create"),
     path("items/update/<int:pk>", ItemUpdateView.as_view(), name="item-update"),
     path("items/delete/<int:pk>", item_delete, name="item-delete"),
-    path("items/inventory/user", UserInventory.as_view(), name='user-inventory'),
+    path("items/inventory/user", UserInventory.as_view(), name="user-inventory"),
     path("items/rent/<int:pk>", item_rent, name="item-rent"),
     path("items/rent/cancel/<int:pk>", cancel_rent, name="item-rent-cancel"),
     path("items/item/detailed/<int:pk>", ItemDetailedView.as_view(), name="item-detailed"),
-    path('organizations/create', AdminNoOrganization.as_view(), name="organization-create"),
-    path('requests/join_requests/admin', JoinRequestAdminListView.as_view(), name='requests-admin-join-view'),
-    path('requests/join_requests/decline/<int:pk>', join_request_decline, name='requests-admin-join-decline'),
-    path('requests/join_requests/accept/<int:pk>', join_request_accept, name='requests-admin-join-accept'),
-    path('request/repair_request/add', RepairRequestCreateView.as_view(), name='requests-repair-add')
+    path("organizations/create", AdminNoOrganization.as_view(), name="organization-create"),
+    path(
+        "requests/join_requests/admin",
+        JoinRequestAdminListView.as_view(),
+        name="requests-admin-join-view",
+    ),
+    path(
+        "requests/join_requests/decline/<int:pk>",
+        join_request_decline,
+        name="requests-admin-join-decline",
+    ),
+    path(
+        "requests/join_requests/accept/<int:pk>",
+        join_request_accept,
+        name="requests-admin-join-accept",
+    ),
+    path(
+        "request/repair_request/add/<int:pk>",
+        RepairRequestCreateView.as_view(),
+        name="requests-repair-add",
+    ),
+    path(
+        "requests/repair_requests/admin",
+        RepairRequestAdminListView.as_view(),
+        name="requests-admin-repair-view",
+    ),
+    path(
+        "requests/repair_requests/decline/<int:pk>",
+        repair_request_decline,
+        name="requests-admin-repair-decline",
+    ),
+    path(
+        "requests/repair_requests/accept/<int:pk>",
+        repair_request_accept,
+        name="requests-admin-repair-accept",
+    ),
+    path("requests/user", RepairRequestListView.as_view(), name="requests-user-view"),
 ]

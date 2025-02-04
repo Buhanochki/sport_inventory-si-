@@ -4,10 +4,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
 
+from core.apps.organizations.models import UserOrganizationConnection
 from core.apps.users.models import CustomUser
 
 from core.apps.users.forms import ExtendedUserCreationForm, UserLoginForm, UserProfileUpdateForm
-from core.apps.organizations.models import UserOrganizationConnection
+
 
 class UserLoginView(TemplateView):
     form_class = UserLoginForm
@@ -45,7 +46,7 @@ class AdminDashboard(TemplateView):
         if request.user.is_anonymous:
             return redirect("login")
         elif not UserOrganizationConnection.objects.get(user=self.request.user):
-            return redirect('organization-create')
+            return redirect("organization-create")
         elif request.user.status == "PT":
             return redirect("user-dashboard")
         return super().get(request, *args, **kwargs)
@@ -85,7 +86,7 @@ class UserRegistration(CreateView):
             user = form.save()
             user.save()
             login(request, user=user)
-            return redirect("register")
+            return redirect("main-page")
         return render(request, self.template_name, context={"form": form})
 
 

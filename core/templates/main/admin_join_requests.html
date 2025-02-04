@@ -12,8 +12,8 @@
 </div>
 <div class="card w-100">
     <div class="card-body d-flex gap-2 p-2">
-        <a href="#" type="button" class="btn btn-primary col-md-6"><b>Заявки на вступление в организацию</b></a>
-        <a href="#" type="button" class="btn btn-outline-primary col-md-6"><b>Заявки на ремонт оборудования</b></a> 
+        <a href="{% url 'requests-admin-join-view' %}" type="button" class="btn btn-primary col-md-6"><b>Заявки на вступление в организацию</b></a>
+        <a href="{% url 'requests-admin-repair-view' %}" type="button" class="btn btn-outline-primary col-md-6"><b>Заявки на ремонт оборудования</b></a> 
     </div>
 </div>
 {% for request in requests %}

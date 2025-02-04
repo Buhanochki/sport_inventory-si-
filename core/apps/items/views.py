@@ -1,5 +1,12 @@
 from django.shortcuts import HttpResponseRedirect, redirect, render
-from django.views.generic import CreateView, DeleteView, ListView, TemplateView, UpdateView, DetailView
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 
 from core.apps.items.models import Item, OrganizationItemConnection, UserItemConnection
 from core.apps.organizations.models import UserOrganizationConnection
@@ -56,8 +63,10 @@ class UserItemsListView(ListView):
                     user=self.request.user
                 ).organization
             )
-        context['user_inventory'] = [item.item for item in UserItemConnection.objects.filter(user=self.request.user)]
-        print(context['user_inventory'])
+        context["user_inventory"] = [
+            item.item for item in UserItemConnection.objects.filter(user=self.request.user)
+        ]
+        print(context["user_inventory"])
         return context
 
 
@@ -67,9 +76,9 @@ class ItemCreateView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class()
-        if request.user.status != "TC":
-            return redirect("main-page")
-        return render(request, self.template_name, context={"form": form})
+        if request.user.status == "TC" and not request.user.is_anonymous:
+            return render(request, self.template_name, context={"form": form})
+        return redirect("main-page")
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
@@ -99,27 +108,35 @@ class ItemUpdateView(UpdateView):
     success_url = "/dashboard/admin"
 
     def get(self, request, *args, **kwargs):
-        if request.user.status != "TC":
-            return redirect("main-page")
-        return super().get(request, *args, **kwargs)
+        if request.user.status == "TC" and not request.user.is_anonymous:
+            return super().get(request, *args, **kwargs)
+        return redirect("main-page")
+
 
 class ItemDetailedView(DetailView):
     model = Item
     template_name = "main/item_detailed.html"
     context_object_name = "item"
 
+
 class UserInventory(ListView):
     model = UserItemConnection
     template_name = "main/user_inventory.html"
-    context_object_name = 'items'
+    context_object_name = "items"
+
+    def get(self, request, *args, **kwargs):
+        if request.user.status == "PT" and not request.user.is_anonymous:
+            return super().get(request, *args, **kwargs)
+        return redirect('main-page')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['items'] = UserItemConnection.objects.filter(user=self.request.user)
+        context["items"] = UserItemConnection.objects.filter(user=self.request.user)
         return context
 
+
 def item_delete(request, pk):
-    if request.user.status == "TC":
+    if request.user.status == "TC" and not request.user.is_anonymous:
         object = Item.objects.get(pk=pk)
         organization_item = OrganizationItemConnection.objects.get(item=object)
         object.delete()
@@ -128,8 +145,9 @@ def item_delete(request, pk):
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
     return redirect("main-page")
 
+
 def item_rent(request, pk):
-    if request.user.status == "PT":
+    if request.user.status == "PT" and not request.user.is_anonymous:
         object = OrganizationItemConnection.objects.get(pk=pk)
         object.amount -= 1
         object.save()
@@ -137,8 +155,9 @@ def item_rent(request, pk):
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
     return redirect("main-page")
 
+
 def cancel_rent(request, pk):
-    if request.user.status == "PT":
+    if request.user.status == "PT" and not request.user.is_anonymous:
         object = UserItemConnection.objects.get(pk=pk)
         organization_item = OrganizationItemConnection.objects.get(item=object.item)
         organization_item.amount += 1
@@ -146,5 +165,3 @@ def cancel_rent(request, pk):
         object.delete()
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
     return redirect("main-page")
-
-        

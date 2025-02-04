@@ -34,7 +34,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin, TimedBaseModel):
     STATUS_CHOICES = [
         ("PT", "Участник"),
         ("TC", "Руководитель"),
-        ("SP", "Поставщик"),
     ]
 
     status = models.CharField(

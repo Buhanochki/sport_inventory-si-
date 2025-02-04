@@ -1,5 +1,15 @@
 {% extends 'base/base.html' %}
 {% block title %} Выберите организацию {% endblock %}
 {% block body %}
-{{form}}
+<div class="card">
+    <div class="card-body gap-2 d-grid">
+        Заявка на ремонт оборудования
+        <form action="{% url 'requests-repair-add' pk %}" method="post">
+        {% csrf_token %}
+        Суть проблемы
+        {{form.title}}
+        <button class="btn btn-primary col-12 mt-2">Подать Заявку</button>
+        </form>
+    </div>  
+</div>
 {% endblock %}

@@ -43,6 +43,12 @@ class RepairRequest(TimedBaseModel):
         max_length=20,
         verbose_name="Название",
     )
+    user = models.ForeignKey(
+        CustomUser,
+        verbose_name="Пользователь",
+        on_delete=models.CASCADE,
+        related_name="repair_requests",
+    )
     item = models.ForeignKey(
         Item,
         on_delete=models.CASCADE,

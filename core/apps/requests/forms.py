@@ -17,7 +17,7 @@ class JoinForm(forms.ModelForm):
 class RepairForm(forms.ModelForm):
     class Meta:
         model = RepairRequest
-        fields = ['title']
+        fields = ["title"]
         widgets = {
-            'title': forms.TextInput(attrs={"class":"form-control", "rows": 1}),
+            "title": forms.TextInput(attrs={"class": "form-control", "rows": 1}),
         }
