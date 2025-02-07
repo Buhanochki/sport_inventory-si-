@@ -1,12 +1,5 @@
 from django.shortcuts import HttpResponseRedirect, redirect, render
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    TemplateView,
-    UpdateView,
-)
+from django.views.generic import DetailView, ListView, TemplateView, UpdateView
 
 from core.apps.items.models import Item, OrganizationItemConnection, UserItemConnection
 from core.apps.organizations.models import UserOrganizationConnection
@@ -127,7 +120,7 @@ class UserInventory(ListView):
     def get(self, request, *args, **kwargs):
         if request.user.status == "PT" and not request.user.is_anonymous:
             return super().get(request, *args, **kwargs)
-        return redirect('main-page')
+        return redirect("main-page")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

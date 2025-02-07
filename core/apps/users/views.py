@@ -4,7 +4,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
 
-from core.apps.organizations.models import UserOrganizationConnection
 from core.apps.users.models import CustomUser
 
 from core.apps.users.forms import ExtendedUserCreationForm, UserLoginForm, UserProfileUpdateForm
@@ -37,6 +36,7 @@ class UserLoginView(TemplateView):
         return render(
             request, self.template_name, context={"form": form, "user_not_found": user_not_found}
         )
+
 
 def main_page(request):
     if request.user.is_anonymous:

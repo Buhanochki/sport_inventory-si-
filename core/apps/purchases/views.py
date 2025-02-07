@@ -1,8 +1,10 @@
-from django.views.generic import ListView, CreateView
-from core.apps.purchases.models import Purchase
+from django.shortcuts import HttpResponseRedirect, redirect
+from django.views.generic import CreateView, ListView
+
 from core.apps.organizations.models import UserOrganizationConnection
+from core.apps.purchases.models import Purchase
+
 from core.apps.purchases.forms import PurchaseCreateForm
-from django.shortcuts import redirect, HttpResponseRedirect
 
 
 class PurchasesListView(ListView):
@@ -13,11 +15,19 @@ class PurchasesListView(ListView):
     def get(self, request, *args, **kwargs):
         if request.user.status == "TC" and not request.user.is_anonymous:
             return super().get(request, *args, **kwargs)
-        return redirect('main-page')
+        return redirect("main-page")
 
     def get_queryset(self):
-        return super().get_queryset().filter(organization=UserOrganizationConnection.objects.get(user=self.request.user).organization)
-    
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                organization=UserOrganizationConnection.objects.get(
+                    user=self.request.user
+                ).organization
+            )
+        )
+
 
 class PurchasesCreateView(CreateView):
     form_class = PurchaseCreateForm
@@ -27,13 +37,15 @@ class PurchasesCreateView(CreateView):
     def get(self, request, *args, **kwargs):
         if request.user.status == "TC" and not request.user.is_anonymous:
             return super().get(request, *args, **kwargs)
-        return redirect('main-page')
+        return redirect("main-page")
 
     def form_valid(self, form):
-        form.instance.organization = UserOrganizationConnection.objects.get(user=self.request.user).organization
+        form.instance.organization = UserOrganizationConnection.objects.get(
+            user=self.request.user
+        ).organization
         form.instance.save()
         return super().form_valid(form)
-    
+
 
 def purchase_delete(request, pk):
     if request.user.status == "TC" and not request.user.is_anonymous:

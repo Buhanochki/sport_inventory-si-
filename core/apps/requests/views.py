@@ -1,8 +1,8 @@
-from django.shortcuts import HttpResponseRedirect, get_object_or_404, redirect, render
-from django.views.generic import CreateView, DetailView, ListView, TemplateView
+from django.shortcuts import HttpResponseRedirect, get_object_or_404, redirect
+from django.views.generic import CreateView, DetailView, ListView
 
 from core.apps.items.models import Item, OrganizationItemConnection, UserItemConnection
-from core.apps.organizations.models import Organization, UserOrganizationConnection
+from core.apps.organizations.models import UserOrganizationConnection
 from core.apps.requests.models import JoinRequest, RepairRequest
 
 from core.apps.requests.forms import JoinForm, RepairForm
@@ -19,7 +19,7 @@ class JoinRequestCreateView(CreateView):
         if request.user.status == "TC":
             return redirect("organization-create")
         if UserOrganizationConnection.objects.filter(user=request.user):
-            return redirect('main-page')
+            return redirect("main-page")
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
@@ -47,8 +47,8 @@ class JoinRequestAdminListView(ListView):
     def get(self, request, *args, **kwargs):
         if request.user.status == "TC" and not request.user.is_anonymous:
             return super().get(request, *args, **kwargs)
-        return redirect('main-page')
-    
+        return redirect("main-page")
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["requests"] = JoinRequest.objects.filter(
@@ -65,7 +65,7 @@ class RepairRequestAdminListView(ListView):
     def get(self, request, *args, **kwargs):
         if request.user.status == "TC" and not request.user.is_anonymous:
             return super().get(request, *args, **kwargs)
-        return redirect('main-page')
+        return redirect("main-page")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

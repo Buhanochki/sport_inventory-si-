@@ -13,6 +13,8 @@ from core.apps.items.views import (
     item_rent,
 )
 from core.apps.organizations.views import AdminNoOrganization
+from core.apps.purchases.views import PurchasesCreateView, PurchasesListView, purchase_delete
+from core.apps.reports.views import BrokenReport, InUseReport, NewReport
 from core.apps.requests.views import (
     JoinRequestAdminListView,
     JoinRequestCreateView,
@@ -33,8 +35,6 @@ from core.apps.users.views import (
     logout_user,
     main_page,
 )
-from core.apps.purchases.views import PurchasesListView, PurchasesCreateView, purchase_delete
-from core.apps.reports.views import InUseReport, BrokenReport, NewReport
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -92,10 +92,10 @@ urlpatterns = [
         name="requests-admin-repair-accept",
     ),
     path("requests/user", RepairRequestListView.as_view(), name="requests-user-view"),
-    path("purchases/view", PurchasesListView.as_view(), name='purchase-view'),
-    path("purchases/create", PurchasesCreateView.as_view(), name='purchase-create'),
-    path("purchases/delete/<int:pk>",purchase_delete, name="purchase-delete"),
+    path("purchases/view", PurchasesListView.as_view(), name="purchase-view"),
+    path("purchases/create", PurchasesCreateView.as_view(), name="purchase-create"),
+    path("purchases/delete/<int:pk>", purchase_delete, name="purchase-delete"),
     path("reports/in_use", InUseReport.as_view(), name="report-in-use"),
-    path('reports/broken', BrokenReport.as_view(), name="report-broken"),
-    path('reports/new', NewReport.as_view(), name='report-new')
+    path("reports/broken", BrokenReport.as_view(), name="report-broken"),
+    path("reports/new", NewReport.as_view(), name="report-new"),
 ]
