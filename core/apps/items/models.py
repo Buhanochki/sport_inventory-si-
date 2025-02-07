@@ -27,6 +27,9 @@ class Item(TimedBaseModel):
         verbose_name_plural = "Продукты"
         ordering = ["pk"]
 
+    def __str__(self):
+        return f'{self.title}'
+
 
 class UserItemConnection(TimedBaseModel):
     user = models.ForeignKey(

@@ -9,7 +9,7 @@ from core.apps.requests.forms import JoinForm, RepairForm
 
 
 class JoinRequestCreateView(CreateView):
-    template_name = "main/no_organisation_user.html"
+    template_name = "requests/join_create.html"
     form_class = JoinForm
     success_url = "/dashboard/user"
 
@@ -31,7 +31,7 @@ class JoinRequestCreateView(CreateView):
 
 
 class JoinRequestMonitor(DetailView):
-    template_name = "main/join_request_monitor.html"
+    template_name = "requests/join_monitor.html"
     model = JoinRequest
     context_object_name = "request"
 
@@ -41,14 +41,14 @@ class JoinRequestMonitor(DetailView):
 
 class JoinRequestAdminListView(ListView):
     model = JoinRequest
-    template_name = "main/admin_join_requests.html"
+    template_name = "requests/join_admin.html"
     context_object_name = "requests"
 
     def get(self, request, *args, **kwargs):
-        if request.user.status == "TC":
+        if request.user.status == "TC" and not request.user.is_anonymous:
             return super().get(request, *args, **kwargs)
         return redirect('main-page')
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["requests"] = JoinRequest.objects.filter(
@@ -59,11 +59,11 @@ class JoinRequestAdminListView(ListView):
 
 class RepairRequestAdminListView(ListView):
     model = RepairRequest
-    template_name = "main/admin_repair_requests.html"
+    template_name = "requests/repair_admin.html"
     context_object_name = "requests"
 
     def get(self, request, *args, **kwargs):
-        if request.user.status == "TC":
+        if request.user.status == "TC" and not request.user.is_anonymous:
             return super().get(request, *args, **kwargs)
         return redirect('main-page')
 
@@ -78,7 +78,7 @@ class RepairRequestAdminListView(ListView):
 class RepairRequestListView(ListView):
     model = RepairRequest
     context_object_name = "requests"
-    template_name = "main/user_repair_requests.html"
+    template_name = "requests/user.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,7 +89,7 @@ class RepairRequestListView(ListView):
 class RepairRequestCreateView(CreateView):
     model = RepairRequest
     form_class = RepairForm
-    template_name = "main/repair_request_create.html"
+    template_name = "requests/repair_create.html"
     success_url = "/items/inventory/user"
 
     def get_context_data(self, **kwargs):

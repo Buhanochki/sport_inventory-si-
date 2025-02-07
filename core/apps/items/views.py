@@ -16,7 +16,7 @@ from core.apps.items.forms import ItemCreationForm, ItemUpdateForm
 
 class AdminItemsListView(ListView):
     model = OrganizationItemConnection
-    template_name = "main/admin_main_page.html"
+    template_name = "main_page/admin.html"
     context_object_name = "items"
 
     def get(self, request, *args, **kwargs):
@@ -42,7 +42,7 @@ class AdminItemsListView(ListView):
 
 class UserItemsListView(ListView):
     model = OrganizationItemConnection
-    template_name = "main/user_main_page.html"
+    template_name = "main_page/user.html"
     context_object_name = "items"
 
     def get(self, request, *args, **kwargs):
@@ -71,7 +71,7 @@ class UserItemsListView(ListView):
 
 
 class ItemCreateView(TemplateView):
-    template_name = "main/item_creation.html"
+    template_name = "items/create.html"
     form_class = ItemCreationForm
 
     def get(self, request, *args, **kwargs):
@@ -103,7 +103,7 @@ class ItemCreateView(TemplateView):
 class ItemUpdateView(UpdateView):
     model = Item
     form_class = ItemUpdateForm
-    template_name = "main/item_update.html"
+    template_name = "items/update.html"
     context_object_name = "item"
     success_url = "/dashboard/admin"
 
@@ -115,13 +115,13 @@ class ItemUpdateView(UpdateView):
 
 class ItemDetailedView(DetailView):
     model = Item
-    template_name = "main/item_detailed.html"
+    template_name = "items/detailed.html"
     context_object_name = "item"
 
 
 class UserInventory(ListView):
     model = UserItemConnection
-    template_name = "main/user_inventory.html"
+    template_name = "items/user.html"
     context_object_name = "items"
 
     def get(self, request, *args, **kwargs):

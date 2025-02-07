@@ -26,8 +26,6 @@ from core.apps.requests.views import (
     repair_request_decline,
 )
 from core.apps.users.views import (
-    AdminDashboard,
-    UserDashboard,
     UserLoginView,
     UserProfile,
     UserProfileUpdate,
@@ -35,6 +33,8 @@ from core.apps.users.views import (
     logout_user,
     main_page,
 )
+from core.apps.purchases.views import PurchasesListView, PurchasesCreateView, purchase_delete
+from core.apps.reports.views import InUseReport, BrokenReport, NewReport
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -92,4 +92,10 @@ urlpatterns = [
         name="requests-admin-repair-accept",
     ),
     path("requests/user", RepairRequestListView.as_view(), name="requests-user-view"),
+    path("purchases/view", PurchasesListView.as_view(), name='purchase-view'),
+    path("purchases/create", PurchasesCreateView.as_view(), name='purchase-create'),
+    path("purchases/delete/<int:pk>",purchase_delete, name="purchase-delete"),
+    path("reports/in_use", InUseReport.as_view(), name="report-in-use"),
+    path('reports/broken', BrokenReport.as_view(), name="report-broken"),
+    path('reports/new', NewReport.as_view(), name='report-new')
 ]

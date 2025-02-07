@@ -38,31 +38,6 @@ class UserLoginView(TemplateView):
             request, self.template_name, context={"form": form, "user_not_found": user_not_found}
         )
 
-
-class AdminDashboard(TemplateView):
-    template_name = "main/admin_main_page.html"
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_anonymous:
-            return redirect("login")
-        elif not UserOrganizationConnection.objects.get(user=self.request.user):
-            return redirect("organization-create")
-        elif request.user.status == "PT":
-            return redirect("user-dashboard")
-        return super().get(request, *args, **kwargs)
-
-
-class UserDashboard(TemplateView):
-    template_name = "main/user_main_page.html"
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_anonymous:
-            redirect("login")
-        elif request.user.status == "TC":
-            return redirect("admin-dashboard")
-        return super().get(request, *args, **kwargs)
-
-
 def main_page(request):
     if request.user.is_anonymous:
         return redirect("login")

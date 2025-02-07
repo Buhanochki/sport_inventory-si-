@@ -7,7 +7,7 @@ from core.apps.organizations.forms import OrganizationCreationForm
 
 
 class AdminNoOrganization(CreateView):
-    template_name = "main/no_organization_admin.html"
+    template_name = "organizations/create.html"
     form_class = OrganizationCreationForm
     success_url = "/"
 

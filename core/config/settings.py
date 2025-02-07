@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     "core.apps.organizations",
     "core.apps.items",
     "core.apps.requests",
-    "core.apps.purchases"
+    "core.apps.purchases",
+    "core.apps.reports",
 ]
 
 MIDDLEWARE = [
