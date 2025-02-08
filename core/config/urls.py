@@ -16,21 +16,21 @@ from core.apps.organizations.views import AdminNoOrganization
 from core.apps.purchases.views import PurchasesCreateView, PurchasesListView, purchase_delete
 from core.apps.reports.views import BrokenReport, InUseReport, NewReport
 from core.apps.requests.views import (
+    AdminCreationRequestListView,
+    CreationRequestCreateView,
+    CreationRequestListView,
     JoinRequestAdminListView,
     JoinRequestCreateView,
     JoinRequestMonitor,
     RepairRequestAdminListView,
     RepairRequestCreateView,
     RepairRequestListView,
-    CreationRequestCreateView,
-    CreationRequestListView,
-    AdminCreationRequestListView,
+    creation_request_accept,
+    creation_request_decline,
     join_request_accept,
     join_request_decline,
     repair_request_accept,
     repair_request_decline,
-    creation_request_accept,
-    creation_request_decline,
 )
 from core.apps.users.views import (
     UserLoginView,
@@ -69,27 +69,27 @@ urlpatterns = [
     path(
         "request/creation_requests/view",
         CreationRequestListView.as_view(),
-        name='requests-creation-view'
+        name="requests-creation-view",
     ),
     path(
         "request/creation_requests/admin/view",
         AdminCreationRequestListView.as_view(),
-        name='requests-creation-view-admin'
+        name="requests-creation-view-admin",
     ),
     path(
         "request/creation_requests/create",
         CreationRequestCreateView.as_view(),
-        name='requests-creation-create'
+        name="requests-creation-create",
     ),
     path(
         "request/creation_requests/decline/<int:pk>",
         creation_request_decline,
-        name='requests-creation-decline'
+        name="requests-creation-decline",
     ),
     path(
         "request/creation_requests/accept/<int:pk>",
         creation_request_accept,
-        name='requests-creation-accept'
+        name="requests-creation-accept",
     ),
     path(
         "requests/join_requests/decline/<int:pk>",

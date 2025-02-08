@@ -50,9 +50,7 @@ class CreationRequest(TimedBaseModel):
         max_length=20,
         verbose_name="Поставщик",
     )
-    amount = models.IntegerField(
-        verbose_name="Количество"
-    )
+    amount = models.IntegerField(verbose_name="Количество")
     STATUS_CHOICES = [
         ("IP", "В процессе рассмотрения"),
         ("DC", "Отклонено"),
@@ -80,6 +78,7 @@ class CreationRequest(TimedBaseModel):
         verbose_name = "Заявка"
         verbose_name_plural = "Заявки на создание"
         ordering = ["pk"]
+
 
 class RepairRequest(TimedBaseModel):
     title = models.CharField(

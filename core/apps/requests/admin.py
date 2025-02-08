@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.apps.requests.models import JoinRequest, RepairRequest, CreationRequest
+from core.apps.requests.models import CreationRequest, JoinRequest, RepairRequest
 
 
 @admin.register(JoinRequest)
@@ -12,7 +12,7 @@ class JoinRequestAdmin(admin.ModelAdmin):
 class RepairRequestAdmin(admin.ModelAdmin):
     list_display = ("title", "item", "status")
 
-@admin.register(CreationRequest)
-class RepairRequestAdmin(admin.ModelAdmin):
-    list_display = ("title", "status")
 
+@admin.register(CreationRequest)
+class CreationRequestAdmin(admin.ModelAdmin):
+    list_display = ("title", "status")
