@@ -3,9 +3,9 @@ from django.views.generic import CreateView, DetailView, ListView
 
 from core.apps.items.models import Item, OrganizationItemConnection, UserItemConnection
 from core.apps.organizations.models import UserOrganizationConnection
-from core.apps.requests.models import JoinRequest, RepairRequest
+from core.apps.requests.models import JoinRequest, RepairRequest, CreationRequest
 
-from core.apps.requests.forms import JoinForm, RepairForm
+from core.apps.requests.forms import JoinForm, RepairForm, CreationForm
 
 
 class JoinRequestCreateView(CreateView):
@@ -110,6 +110,37 @@ class RepairRequestCreateView(CreateView):
         return super().form_valid(form)
 
 
+class CreationRequestCreateView(CreateView):
+    model = CreationRequest
+    template_name = "requests/creation_create.html"
+    form_class = CreationForm
+    success_url = "/"
+
+    def form_valid(self, form):
+        form.instance.organization = UserOrganizationConnection.objects.get(
+            user=self.request.user
+        ).organization
+        form.instance.user = self.request.user
+        form.instance.save()
+        return super().form_valid(form)
+
+
+class CreationRequestListView(ListView):
+    model = CreationRequest
+    context_object_name = "requests"
+    template_name = "requests/creation_view.html"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)
+    
+class AdminCreationRequestListView(ListView):
+    model = CreationRequest
+    context_object_name = "requests"
+    template_name = "requests/create_admin.html"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(organization=UserOrganizationConnection.objects.get(user=self.request.user).organization)
+    
 def join_request_decline(request, pk):
     if request.user.status == "TC":
         joinrequest = JoinRequest.objects.get(pk=pk)
@@ -157,4 +188,28 @@ def repair_request_accept(request, pk):
         item_organization.save()
 
         return HttpResponseRedirect(request.META["HTTP_REFERER"])
+    return redirect("main-page")
+
+def creation_request_accept(request, pk):
+    if request.user.status == "TC":
+        creationrequest = CreationRequest.objects.get(pk=pk)
+        creationrequest.status = "AC"
+        creationrequest.save()
+        item = Item.objects.create(title=creationrequest.title, 
+                                   description=creationrequest.description,
+                                   supplier=creationrequest.supplier)
+        item.save()
+        item_organization = OrganizationItemConnection.objects.create(organization=creationrequest.organization,
+                                                                      item=item,
+                                                                      amount=creationrequest.amount)
+        item_organization.save()
+
+    return redirect("main-page")
+
+def creation_request_decline(request, pk):
+    if request.user.status == "TC":
+        creationrequest = CreationRequest.objects.get(pk=pk)
+        creationrequest.status = "DC"
+        creationrequest.save()
+
     return redirect("main-page")

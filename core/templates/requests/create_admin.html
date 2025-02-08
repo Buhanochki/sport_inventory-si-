@@ -15,7 +15,7 @@
         <div class="row g-2">  <!-- Добавлен контейнер row с отступами между колонками -->
             <div class="col-md-4">
                 <a href="{% url 'requests-admin-join-view' %}" 
-                   class="btn btn-primary w-100"><b>Заявки на вступление в организацию</b></a>
+                   class="btn btn-outline-primary w-100"><b>Заявки на вступление в организацию</b></a>
             </div>
             <div class="col-md-4">
                 <a href="{% url 'requests-admin-repair-view' %}" 
@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-4">
                 <a href="{% url 'requests-creation-view-admin' %}" 
-                   class="btn btn-outline-primary w-100"><b>Заявки на создание</b></a>
+                   class="btn btn-primary w-100"><b>Заявки на создание</b></a>
             </div>
         </div>
     </div>
@@ -31,12 +31,16 @@
 {% for request in requests %}
     {% if request.status == "IP" %}
     <div class="card mt-2">
-        <div class="card-body d-flex justify-content-between">
-            <h5 class="card-title">{{request.user.last_name}} {{request.user.first_name}} {{request.user.surname}}</h5>
-            <div class="d-flex gap-1">
-                <a href="/requests/join_requests/decline/{{request.pk}}"><span class="badge text-bg-danger p-2 d-flex align-items-center"><i class="bi bi-x-lg"></i></span></a>
-                <a href="/requests/join_requests/accept/{{request.pk}}"><span class="badge text-bg-primary p-2 d-flex align-items-center"><i class="bi bi-check-lg"></i></span></a>
+        <div class="card-header d-flex justify-content-between">
+            <b class="col-md-6">{{request.title}}</b>
+            <div class="col-md-2 d-flex gap-1 justify-content-end">
+                <a href="{% url 'requests-creation-decline' request.pk %}"><span class="badge text-bg-danger p-2"><i class="bi bi-x-lg"></i></span></a>
+                <a href="{% url 'requests-creation-accept' request.pk %}"><span class="badge text-bg-primary p-2"><i class="bi bi-check-lg"></i></span></a>
             </div>
+        </div>
+        <div class="card-body d-grid">
+            <b class="col-md-4">Описание: <div class="card-text">{{request.description}}</div></b>
+            <b class="col-md-4">Количество: <div class="card-text">{{request.amount}}</div></b>
         </div>
     </div>
     {% endif %}
