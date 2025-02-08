@@ -1,8 +1,6 @@
 .vscode/
 *.pyc
 venv/
-static/
-!static/.gitkeep
 __pycache__/
 media/
 db.sqlite3
